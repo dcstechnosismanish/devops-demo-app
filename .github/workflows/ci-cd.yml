@@ -6,11 +6,11 @@ on:
             - main
 
 jobs:
-    runner-info:
+    lint:
         runs-on: ubuntu-latest
 
         steps:
-            - name: CheckOut
+            - name: Checkout Repository
               uses: actions/checkout@v4
 
             - name: Setup Node.js
@@ -27,15 +27,43 @@ jobs:
             - name: Check NPM Version
               run: npm -v
 
+            - name: Verify Express Installation
+              run: npm list express
+
+    test:
+        needs: lint
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout Repository
+              uses: actions/checkout@v4
+
+            - name: Setup Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: 22
+
+            - name: Install Dependencies
+              run: npm ci
+
             - name: Run Tests
               run: npm test
 
-            #- name: Run Application
-              env:
-                  NODE_ENV: production
-                  APP_NAME: DevOps Demo App
-                  APP_VERSION: v1.0.0
-              #run: node app.js
+    build:
+        needs: test
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout Repository
+              uses: actions/checkout@v4
+
+            - name: Setup Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: 22
+
+            - name: Install Dependencies
+              run: npm ci
 
             - name: Show Installed Packages
               run: npm list
