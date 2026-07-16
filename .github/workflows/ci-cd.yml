@@ -1,4 +1,4 @@
-name: Devops Demo Pipeline
+name: Devops demo pipline
 
 on:
     push:
@@ -6,9 +6,21 @@ on:
             - main
 
 jobs:
-    first-job:
+    runner-ifo:
         runs-on: ubuntu-latest
 
         steps:
-            - name: Print Welcome Message
-              run: echo "Welcome to devops pathshala app"
+            - name: Print message
+              run: date
+
+            - name: Print current user
+              run: whoami
+
+            - name: Print working directory
+              run: pwd
+
+            - name: Show OS Information
+              run: uname -a
+
+            - name: List Files
+              run: ls -la
