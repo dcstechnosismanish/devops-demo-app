@@ -5,5 +5,19 @@
   "main": "app.js",
   "scripts": {
     "start": "node app.js"
-  }
+  },
+  "directories": {
+    "test": "tests"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dcstechnosismanish/devops-demo-app.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dcstechnosismanish/devops-demo-app/issues"
+  },
+  "homepage": "https://github.com/dcstechnosismanish/devops-demo-app#readme"
 }
