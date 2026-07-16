@@ -24,6 +24,9 @@ jobs:
             - name: Check NPM Version
               run: npm -v
 
+            - name: Run Tests
+              run: npm test
+
             - name: Run application
               env:
                   NODE_ENV: production

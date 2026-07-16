@@ -4,7 +4,8 @@
   "description": "DevOps Demo Application",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js"
+  "start": "node app.js",
+  "test": "jest"
   },
   "directories": {
     "test": "tests"
@@ -22,5 +23,9 @@
   "homepage": "https://github.com/dcstechnosismanish/devops-demo-app#readme",
   "dependencies": {
     "express": "^5.2.1"
+  },
+  "devDependencies": {
+    "eslint": "^10.7.0",
+    "jest": "^30.4.2"
   }
 }

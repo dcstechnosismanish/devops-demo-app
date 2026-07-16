@@ -1,10 +1,27 @@
-console.log("==================================");
-console.log("🚀 DevOps Demo App");
-console.log("==================================");
+const express = require("express");
 
-console.log("Node Version :", process.version);
-console.log("Environment  :", process.env.NODE_ENV);
-console.log("Application  :", process.env.APP_NAME);
-console.log("Version      :", process.env.APP_VERSION);
+const app = express();
 
-console.log("==================================");
+const PORT = process.env.PORT || 3000;
+
+app.get("/", (req, res) => {
+    res.send("🚀 Welcome to DevOps Demo App");
+});
+
+app.get("/health", (req, res) => {
+    res.json({
+        status: "UP",
+        application: "DevOps Demo App",
+        version: "1.0.0"
+    });
+});
+
+app.get("/version", (req, res) => {
+    res.json({
+        node: process.version
+    });
+});
+
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+});
