@@ -1,0 +1,14 @@
+name: Devops Demo Pipeline
+
+on:
+    push:
+        branches:
+            - main
+
+jobs:
+    first-job:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Print Welcome Message
+              run: echo "Welcome to devops pathshala app"
