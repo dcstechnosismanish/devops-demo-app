@@ -25,6 +25,11 @@ jobs:
               run: npm -v
 
             - name: Run application
+              env:
+                  NODE_ENV: production
+                  APP_NAME: DevOps Demo App
+                  APP_VERSION: v1.0.0
+
               run: node app.js
 
             - name: Install Depdencies
