@@ -37,3 +37,9 @@ jobs:
 
             - name: Show Installed Packages
               run: npm list
+
+            - name: Read Secret
+              env:
+                  OWNER: ${{ secrets.APP_OWNER }}
+              run: |
+                  echo "Repository Owner: $OWNER"
