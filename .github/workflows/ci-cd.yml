@@ -10,17 +10,17 @@ jobs:
         runs-on: ubuntu-latest
 
         steps:
-            - name: Print message
-              run: date
+            - name: CheckOut
+              uses: action/checkout@v4
 
-            - name: Print current user
-              run: whoami
-
-            - name: Print working directory
+            - name: Print working Directory
               run: pwd
 
-            - name: Show OS Information
-              run: uname -a
-
-            - name: List Files
+            - name: List Project files
               run: ls -la
+
+            - name: Show git status
+              run: git status
+
+            - name: Show README
+              run: cat README.md
