@@ -26,3 +26,9 @@ jobs:
 
             - name: Run application
               run: node app.js
+
+            - name: Install Depdencies
+              run: npm ci
+
+            - name: Show Installed Packages
+              run: npm list
