@@ -1,46 +1,47 @@
 name: DevOps Demo CI Pipeline
 
 on:
-  push:
-    branches:
-      - main
+    push:
+        branches:
+            - main
 
 jobs:
-  runner-info:
-    runs-on: ubuntu-latest
+    runner-info:
+        runs-on: ubuntu-latest
 
-    steps:
-      - name: CheckOut
-        uses: actions/checkout@v4
+        steps:
+            - name: CheckOut
+              uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 22
+            - name: Setup Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: 22
 
-      - name: Install Dependencies
-        run: npm ci
+            - name: Install Dependencies
+              run: npm ci
 
-      - name: Check Node Version
-        run: node -v
+            - name: Check Node Version
+              run: node -v
 
-      - name: Check NPM Version
-        run: npm -v
+            - name: Check NPM Version
+              run: npm -v
 
-      - name: Run Tests
-        run: npm test
+            - name: Run Tests
+              run: npm test
 
-      - name: Run Application
-        env:
-          NODE_ENV: production
-          APP_NAME: DevOps Demo App
-          APP_VERSION: v1.0.0
-        run: node app.js
+            - name: Run Application
+              env:
+                  NODE_ENV: production
+                  APP_NAME: DevOps Demo App
+                  APP_VERSION: v1.0.0
+              run: node app.js
 
-      - name: Show Installed Packages
-        run: npm list
+            - name: Show Installed Packages
+              run: npm list
 
-      - name: Read Secret
-        env:
-          OWNER: ${{ secrets.APP_OWNER }}
-        run: echo "Repository Owner: $OWNER"
+            - name: Read Secret
+              env:
+                  OWNER: ${{ secrets.APP_OWNER }}
+              run: |
+                  echo "Repository Owner: $OWNER"
