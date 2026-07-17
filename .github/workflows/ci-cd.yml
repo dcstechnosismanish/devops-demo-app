@@ -1,75 +1,105 @@
 name: DevOps Demo CI Pipeline
 
 on:
-    push:
-        branches:
-            - main
+  push:
+    branches:
+      - main
 
 jobs:
-    lint:
-        runs-on: ubuntu-latest
+  lint:
+    runs-on: ubuntu-latest
 
-        steps:
-            - name: Checkout Repository
-              uses: actions/checkout@v4
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
 
-            - name: Setup Node.js
-              uses: actions/setup-node@v4
-              with:
-                  node-version: 22
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
 
-            - name: Install Dependencies
-              run: npm ci
+      - name: Install Dependencies
+        run: npm ci
 
-            - name: Check Node Version
-              run: node -v
+      - name: Check Node Version
+        run: node -v
 
-            - name: Check NPM Version
-              run: npm -v
+      - name: Check NPM Version
+        run: npm -v
 
-            - name: Verify Express Installation
-              run: npm list express
+      - name: Verify Express Installation
+        run: npm list express
 
-    test:
-        needs: lint
-        runs-on: ubuntu-latest
+  test:
+    needs: lint
+    runs-on: ubuntu-latest
 
-        steps:
-            - name: Checkout Repository
-              uses: actions/checkout@v4
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
 
-            - name: Setup Node.js
-              uses: actions/setup-node@v4
-              with:
-                  node-version: 22
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
 
-            - name: Install Dependencies
-              run: npm ci
+      - name: Install Dependencies
+        run: npm ci
 
-            - name: Run Tests
-              run: npm test
+      - name: Run Tests
+        run: npm test
 
-    build:
-        needs: test
-        runs-on: ubuntu-latest
+  build:
+    needs: test
+    runs-on: ubuntu-latest
 
-        steps:
-            - name: Checkout Repository
-              uses: actions/checkout@v4
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
 
-            - name: Setup Node.js
-              uses: actions/setup-node@v4
-              with:
-                  node-version: 22
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
 
-            - name: Install Dependencies
-              run: npm ci
+      - name: Install Dependencies
+        run: npm ci
 
-            - name: Show Installed Packages
-              run: npm list
+      - name: Show Installed Packages
+        run: npm list
 
-            - name: Read Secret
-              env:
-                  OWNER: ${{ secrets.APP_OWNER }}
-              run: |
-                  echo "Repository Owner: $OWNER"
+      - name: Read Secret
+        env:
+          OWNER: ${{ secrets.APP_OWNER }}
+        run: |
+          echo "Repository Owner: $OWNER"
+
+      - name: Create Build Folder
+        run: |
+          mkdir output
+          echo "DevOps Demo App Build Successful" > output/build.txt
+
+      - name: Show Build Folder
+        run: ls -R output
+
+      - name: Upload Build Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: devops-build
+          path: output/
+
+  download-artifact:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download Build Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: devops-build
+
+      - name: Show Downloaded Files
+        run: ls -R
+
+      - name: Read Artifact File
+        run: cat build.txt
