@@ -100,6 +100,13 @@ jobs:
           name: devops-build
           path: output/
 
+      - name: Build Docker image
+        run: |
+          docker build -t devops-demo-app:${{ github.sha }} .
+
+      - name: List Docker Image
+        run: docker image
+
   download-artifact:
     needs: build
     runs-on: ubuntu-latest
