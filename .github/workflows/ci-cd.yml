@@ -115,8 +115,8 @@ jobs:
           context: .
           push: true
           tags: |
-            mannuo/devops-demo-app:latest
-            mannuo/devops-demo-app:${{ github.sha }}
+            mannu0/devops-demo-app:latest
+            mannu0/devops-demo-app:${{ github.sha }}
 
   download-artifact:
     needs: build
