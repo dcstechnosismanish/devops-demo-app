@@ -118,6 +118,32 @@ jobs:
             mannu0/devops-demo-app:latest
             mannu0/devops-demo-app:${{ github.sha }}
 
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy to AWS EC2
+        uses: appleboy/ssh-action@v1.2.2
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            docker pull mann0/devops-demo-app:latest
+
+            docker stop devops-demo || true
+            docker rm devops-demo || true
+
+
+            docker run -d \
+              --name devops-demo \
+              -p 3000:3000 \
+              --restart unless-stopped \
+              mannu0/devops-demo-app:latest
+
+            docker image prune -f
+
   download-artifact:
     needs: build
     runs-on: ubuntu-latest
